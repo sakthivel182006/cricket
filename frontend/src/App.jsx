@@ -61,19 +61,19 @@ function App() {
               </div>
               <div className="hero-stats">
                 <div className="stat">
-                  <h3>2,020+</h3>
+                  <h3>0</h3>
                   <p>Auctions Completed</p>
                 </div>
                 <div className="stat">
-                  <h3>10+</h3>
+                  <h3>0</h3>
                   <p>Countries</p>
                 </div>
                 <div className="stat">
-                  <h3>15,000+</h3>
+                  <h3>0</h3>
                   <p>Athletes Registered</p>
                 </div>
                 <div className="stat">
-                  <h3>$25M+</h3>
+                  <h3>0</h3>
                   <p>Total Transactions</p>
                 </div>
               </div>
