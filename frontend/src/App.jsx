@@ -1,10 +1,25 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    sport: '',
+    role: '',
+    profile: null,
+    age: '',
+    password: ''
+  });
+  const [loginData, setLoginData] = useState({
+    identifier: '',
+    password: ''
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +28,47 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData({ ...formData, [name]: files ? files[0] : value });
+  };
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
+
+  const handleRegistrationSubmit = (e) => {
+    e.preventDefault();
+    console.log('Registration Data:', formData);
+    if (!formData.name || !formData.email || !formData.password) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+    alert('Registration successful!');
+    setShowRegistration(false);
+    setFormData({
+      name: '', phone: '', email: '', sport: '', role: '', profile: null, age: '', password: ''
+    });
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login Data:', loginData);
+    if (!loginData.identifier || !loginData.password) {
+      alert('Please enter your email/phone and password.');
+      return;
+    }
+    alert('Login successful!');
+    setShowLogin(false);
+    setLoginData({
+      identifier: '', password: ''
+    });
+  };
+
+  const cricketRoles = ['Batsman', 'Bowler', 'All-Rounder', 'Wicket Keeper'];
+  const footballRoles = ['Forward', 'Midfielder', 'Defender', 'Goalkeeper'];
 
   return (
     <div className="App">
@@ -27,11 +83,16 @@ function App() {
               &times;
             </button>
             <ul>
-              <li><a href="#features" onClick={() => setIsMenuOpen(false)}>Features</a></li>
+              <li><a href="#home" onClick={() => { setIsMenuOpen(false); setShowRegistration(false); setShowLogin(false); }}>Home</a></li>
               <li><a href="#testimonials" onClick={() => setIsMenuOpen(false)}>Testimonials</a></li>
               <li><a href="#sponsors" onClick={() => setIsMenuOpen(false)}>Sponsors</a></li>
               <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
-              <li className="sign-in"><a href="#signin">Sign In / Register</a></li>
+              <li className="sign-in">
+                <button className="nav-button" onClick={() => { setShowRegistration(true); setShowLogin(false); setIsMenuOpen(false); }}>Register</button>
+              </li>
+              <li className="sign-in">
+                <button className="nav-button" onClick={() => { setShowLogin(true); setShowRegistration(false); setIsMenuOpen(false); }}>Login</button>
+              </li>
             </ul>
           </nav>
           
@@ -46,272 +107,112 @@ function App() {
         </div>
       </header>
 
-      <main>
-        <section className="hero">
-          <div className="hero-background">
-            <div className="hero-overlay"></div>
-          </div>
-          <div className="container">
-            <div className="hero-content">
-              <h1>Revolutionizing Athlete Auctions Worldwide</h1>
-              <p>Join thousands of sports organizations that have completed over 2,020+ auctions across 10 different countries.</p>
-              <div className="hero-buttons">
-                <button className="cta-button primary">Register now</button>
-                <button className="cta-button secondary">Watch Demo</button>
-              </div>
-              <div className="hero-stats">
-                <div className="stat">
-                  <h3>0</h3>
-                  <p>Auctions Completed</p>
-                </div>
-                <div className="stat">
-                  <h3>0</h3>
-                  <p>Countries</p>
-                </div>
-                <div className="stat">
-                  <h3>0</h3>
-                  <p>Athletes Registered</p>
-                </div>
-                <div className="stat">
-                  <h3>0</h3>
-                  <p>Total Transactions</p>
-                </div>
-              </div>
+      <section className={`registration-form ${showRegistration ? 'active' : ''}`}>
+        <div className="container">
+          <button className="form-close-btn" onClick={() => setShowRegistration(false)}>&times;</button>
+          <h2>Sports Registration</h2>
+          <form onSubmit={handleRegistrationSubmit}>
+            <div className="form-group">
+              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+              <label>Name</label>
             </div>
-          </div>
-        </section>
-
-        <section id="features" className="features">
-          <div className="container">
-            <div className="section-header">
-              <h2>Advanced Features Designed for Modern Auctions</h2>
-              <p>Our platform provides everything you need to run successful athlete auctions</p>
+            <div className="form-group">
+              <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
+              <label>Phone Number</label>
             </div>
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-live-stream"></i>
-                </div>
-                <h3>Live Streaming Integration</h3>
-                <p>Seamless integration with YouTube, Facebook, and Twitch with custom overlays that display real-time bidding information.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-registration"></i>
-                </div>
-                <h3>Online Player Registration</h3>
-                <p>Customizable registration forms that athletes can access from anywhere. Automated data validation and profile management.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-support"></i>
-                </div>
-                <h3>24/7 Customer Support</h3>
-                <p>Our dedicated support team is available around the clock to assist with any issues or questions you may have.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-sponsor"></i>
-                </div>
-                <h3>Sponsor Promotion</h3>
-                <p>Highlight your sponsors across multiple touchpoints including dashboards, summary screens, and live overlays.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-analytics"></i>
-                </div>
-                <h3>Advanced Analytics</h3>
-                <p>Comprehensive reporting tools that provide insights into bidding patterns, participant engagement, and financial outcomes.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
-
-              <div className="feature-card">
-                <div className="feature-icon">
-                  <i className="icon-security"></i>
-                </div>
-                <h3>Secure Transactions</h3>
-                <p>Bank-level encryption and secure payment processing to ensure all financial transactions are protected.</p>
-                <a href="#" className="feature-link">Learn more →</a>
-              </div>
+            <div className="form-group">
+              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+              <label>Email</label>
             </div>
-          </div>
-        </section>
-
-        <section className="demo">
-          <div className="container">
-            <div className="demo-content">
-              <div className="demo-text">
-                <h2>See SAKTHIVEL in Action</h2>
-                <p>Our interactive dashboard makes managing auctions simple and intuitive. Real-time updates, participant tracking, and seamless bid management all in one place.</p>
-                <ul className="demo-features">
-                  <li>Real-time bid tracking</li>
-                  <li>Participant management</li>
-                  <li>Automated notifications</li>
-                  <li>Financial reporting</li>
-                </ul>
-                <button className="cta-button primary">Request a Demo</button>
+            <div className="form-group select-group">
+              <select name="sport" value={formData.sport} onChange={handleChange} required>
+                <option value="">Choose Sport</option>
+                <option value="cricket">Cricket</option>
+                <option value="football">Football</option>
+              </select>
+              <label>Sport</label>
+            </div>
+            {formData.sport && (
+              <div className="form-group select-group">
+                <select name="role" value={formData.role} onChange={handleChange} required>
+                  <option value="">Select Role</option>
+                  {(formData.sport === 'cricket' ? cricketRoles : footballRoles).map((r, i) => <option key={i} value={r}>{r}</option>)}
+                </select>
+                <label>Role</label>
               </div>
-              <div className="demo-visual">
-                <div className="dashboard-preview">
-                  <div className="dashboard-header">
-                    <div className="dashboard-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
+            )}
+            <div className="form-group file-group">
+              <label htmlFor="profile">Profile Picture</label>
+              <input id="profile" type="file" name="profile" onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required />
+              <label>Age</label>
+            </div>
+            <div className="form-group">
+              <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+              <label>Password</label>
+            </div>
+            <button type="submit" className="form-button">Submit</button>
+          </form>
+        </div>
+      </section>
+
+      <section className={`login-form ${showLogin ? 'active' : ''}`}>
+        <div className="container">
+          <button className="form-close-btn" onClick={() => setShowLogin(false)}>&times;</button>
+          <h2>Login</h2>
+          <form onSubmit={handleLoginSubmit}>
+            <div className="form-group">
+              <input type="text" name="identifier" placeholder="Email or Phone" value={loginData.identifier} onChange={handleLoginChange} required />
+              <label>Email or Phone</label>
+            </div>
+            <div className="form-group">
+              <input type="password" name="password" placeholder="Password" value={loginData.password} onChange={handleLoginChange} required />
+              <label>Password</label>
+            </div>
+            <button type="submit" className="form-button">Login</button>
+          </form>
+        </div>
+      </section>
+
+      {!showRegistration && !showLogin && (
+        <main>
+          <section className="hero">
+            <div className="hero-background">
+              <div className="hero-overlay"></div>
+            </div>
+            <div className="container">
+              <div className="hero-content">
+                <h1>Revolutionizing Sports Auctions Worldwide</h1>
+                <p>Join thousands of sports organizations that have completed over 2,020+ auctions across 10 different countries.</p>
+                <div className="hero-buttons">
+                  <button className="cta-button primary" onClick={() => setShowRegistration(true)}>Register now</button>
+                  <button className="cta-button secondary">Watch Demo</button>
+                </div>
+                <div className="hero-stats">
+                  <div className="stat">
+                    <h3>2020+</h3>
+                    <p>Auctions Completed</p>
                   </div>
-                  <div className="dashboard-content">
-                    <div className="chart-placeholder"></div>
-                    <div className="stats-placeholder">
-                      <div className="stat-placeholder"></div>
-                      <div className="stat-placeholder"></div>
-                      <div className="stat-placeholder"></div>
-                    </div>
+                  <div className="stat">
+                    <h3>10+</h3>
+                    <p>Countries</p>
+                  </div>
+                  <div className="stat">
+                    <h3>5000+</h3>
+                    <p>Sports Registered</p>
+                  </div>
+                  <div className="stat">
+                    <h3>10K+</h3>
+                    <p>Total Transactions</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section id="testimonials" className="testimonials">
-          <div className="container">
-            <div className="section-header">
-              <h2>What Our Clients Say</h2>
-              <p>Hear from sports organizations that have transformed their auctions with our platform</p>
-            </div>
-            <div className="testimonials-grid">
-              <div className="testimonial-card">
-                <div className="testimonial-content">
-                  <p>"SAKTHIVEL revolutionized our annual draft. The live streaming integration brought our event to a global audience and increased participation by 40%."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-image"></div>
-                  <div className="author-details">
-                    <h4>Michael Johnson</h4>
-                    <p>Commissioner, National Basketball League</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="testimonial-card">
-                <div className="testimonial-content">
-                  <p>"The registration system saved us countless hours of paperwork. The analytics helped us understand bidding patterns and maximize outcomes."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-image"></div>
-                  <div className="author-details">
-                    <h4>Sarah Williams</h4>
-                    <p>Director, European Football Association</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="testimonial-card">
-                <div className="testimonial-content">
-                  <p>"Our sponsors were thrilled with the visibility they received. The overlay system made our broadcast look professional and engaging."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-image"></div>
-                  <div className="author-details">
-                    <h4>David Chen</h4>
-                    <p>CEO, Asia Pacific Sports Group</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="sponsors" className="sponsors">
-          <div className="container">
-            <div className="section-header">
-              <h2>Trusted by Leading Organizations</h2>
-              <p>We're proud to partner with sports organizations and sponsors worldwide</p>
-            </div>
-            <div className="sponsors-grid">
-              <div className="sponsor-logo"></div>
-              <div className="sponsor-logo"></div>
-              <div className="sponsor-logo"></div>
-              <div className="sponsor-logo"></div>
-              <div className="sponsor-logo"></div>
-              <div className="sponsor-logo"></div>
-            </div>
-          </div>
-        </section>
-
-        <section className="cta-section">
-          <div className="container">
-            <div className="cta-content">
-              <h2>Ready to Transform Your Athlete Auctions?</h2>
-              <p>Join thousands of sports organizations using SAKTHIVEL to streamline their auction process and maximize results.</p>
-              <div className="cta-buttons">
-                <button className="cta-button primary">Get Started Today</button>
-                <button className="cta-button secondary">Contact Sales</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="contact">
-          <div className="container">
-            <div className="contact-content">
-              <div className="contact-info">
-                <h2>Get in Touch</h2>
-                <p>Have questions or want to learn more about how SAKTHIVEL can help your organization? Our team is here to help.</p>
-                <div className="contact-details">
-                  <div className="contact-item">
-                    <i className="icon-email"></i>
-                    <div>
-                      <h4>Email</h4>
-                      <p>support@SAKTHIVEL.com</p>
-                    </div>
-                  </div>
-                  <div className="contact-item">
-                    <i className="icon-phone"></i>
-                    <div>
-                      <h4>Phone</h4>
-                      <p>+1 (555) 123-4567</p>
-                    </div>
-                  </div>
-                  <div className="contact-item">
-                    <i className="icon-location"></i>
-                    <div>
-                      <h4>Office</h4>
-                      <p>123 Sports Avenue, San Francisco, CA 94107</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="contact-form">
-                <form>
-                  <div className="form-group">
-                    <input type="text" placeholder="Your Name" />
-                  </div>
-                  <div className="form-group">
-                    <input type="email" placeholder="Your Email" />
-                  </div>
-                  <div className="form-group">
-                    <input type="text" placeholder="Organization" />
-                  </div>
-                  <div className="form-group">
-                    <textarea placeholder="Your Message"></textarea>
-                  </div>
-                  <button type="submit" className="cta-button primary">Send Message</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      )}
 
       <footer className="footer">
         <div className="container">
@@ -320,7 +221,7 @@ function App() {
               <div className="logo">
                 <h2>SAKTHIVEL</h2>
               </div>
-              <p>Revolutionizing athlete auctions with cutting-edge technology and seamless user experiences.</p>
+              <p>Revolutionizing Sports auctions with cutting-edge technology and seamless user experiences.</p>
               <div className="social-links">
                 <a href="#"><i className="icon-facebook"></i></a>
                 <a href="#"><i className="icon-twitter"></i></a>
@@ -328,49 +229,9 @@ function App() {
                 <a href="#"><i className="icon-linkedin"></i></a>
               </div>
             </div>
-            <div className="footer-section">
-              <h3>Product</h3>
-              <ul>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Case Studies</a></li>
-                <li><a href="#">Testimonials</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h3>Resources</h3>
-              <ul>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Documentation</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">API</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h3>Company</h3>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Partners</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h3>Subscribe</h3>
-              <p>Stay updated with our latest features and news.</p>
-              <div className="subscribe-form">
-                <input type="email" placeholder="Your email" />
-                <button><i className="icon-send"></i></button>
-              </div>
-            </div>
           </div>
           <div className="footer-bottom">
             <p>&copy; {new Date().getFullYear()} SAKTHIVEL. All rights reserved.</p>
-            <div className="footer-links">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-              <a href="#">Cookie Policy</a>
-            </div>
           </div>
         </div>
       </footer>
