@@ -19,7 +19,7 @@ function App() {
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container">
           <div className="logo">
-            <h2>BidAthlete</h2>
+            <h2>SAKTHIVEL</h2>
           </div>
           
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
@@ -149,7 +149,7 @@ function App() {
           <div className="container">
             <div className="demo-content">
               <div className="demo-text">
-                <h2>See BidAthlete in Action</h2>
+                <h2>See SAKTHIVEL in Action</h2>
                 <p>Our interactive dashboard makes managing auctions simple and intuitive. Real-time updates, participant tracking, and seamless bid management all in one place.</p>
                 <ul className="demo-features">
                   <li>Real-time bid tracking</li>
@@ -191,7 +191,7 @@ function App() {
             <div className="testimonials-grid">
               <div className="testimonial-card">
                 <div className="testimonial-content">
-                  <p>"BidAthlete revolutionized our annual draft. The live streaming integration brought our event to a global audience and increased participation by 40%."</p>
+                  <p>"SAKTHIVEL revolutionized our annual draft. The live streaming integration brought our event to a global audience and increased participation by 40%."</p>
                 </div>
                 <div className="testimonial-author">
                   <div className="author-image"></div>
@@ -252,7 +252,7 @@ function App() {
           <div className="container">
             <div className="cta-content">
               <h2>Ready to Transform Your Athlete Auctions?</h2>
-              <p>Join thousands of sports organizations using BidAthlete to streamline their auction process and maximize results.</p>
+              <p>Join thousands of sports organizations using SAKTHIVEL to streamline their auction process and maximize results.</p>
               <div className="cta-buttons">
                 <button className="cta-button primary">Get Started Today</button>
                 <button className="cta-button secondary">Contact Sales</button>
@@ -266,13 +266,13 @@ function App() {
             <div className="contact-content">
               <div className="contact-info">
                 <h2>Get in Touch</h2>
-                <p>Have questions or want to learn more about how BidAthlete can help your organization? Our team is here to help.</p>
+                <p>Have questions or want to learn more about how SAKTHIVEL can help your organization? Our team is here to help.</p>
                 <div className="contact-details">
                   <div className="contact-item">
                     <i className="icon-email"></i>
                     <div>
                       <h4>Email</h4>
-                      <p>support@bidathlete.com</p>
+                      <p>support@SAKTHIVEL.com</p>
                     </div>
                   </div>
                   <div className="contact-item">
@@ -318,7 +318,7 @@ function App() {
           <div className="footer-content">
             <div className="footer-section">
               <div className="logo">
-                <h2>BidAthlete</h2>
+                <h2>SAKTHIVEL</h2>
               </div>
               <p>Revolutionizing athlete auctions with cutting-edge technology and seamless user experiences.</p>
               <div className="social-links">
@@ -365,7 +365,7 @@ function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} BidAthlete. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} SAKTHIVEL. All rights reserved.</p>
             <div className="footer-links">
               <a href="#">Privacy Policy</a>
               <a href="#">Terms of Service</a>
